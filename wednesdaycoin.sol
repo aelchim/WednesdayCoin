@@ -35,10 +35,8 @@ contract Token {
 
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
     event Approval(address indexed _owner, address indexed _spender, uint256 _value);
-    
+
 }
-
-
 
 contract StandardToken is Token {
 
@@ -47,24 +45,31 @@ contract StandardToken is Token {
         //If your token leaves out totalSupply and can issue more tokens as time goes on, you need to check if it doesn't wrap.
         //Replace the if with this one instead.
         //if (balances[msg.sender] >= _value && balances[_to] + _value > balances[_to]) {
+
+        //check if Wednesday(3)
+        if (uint8((now / 86400 + 4) % 7) != 3) {
+            return false;
+        }
+
         if (balances[msg.sender] >= _value && _value > 0) {
             balances[msg.sender] -= _value;
             balances[_to] += _value;
             Transfer(msg.sender, _to, _value);
             return true;
-        } else { return false; }
+        } else {return false;}
     }
 
     function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
         //same as above. Replace this line with the following if you want to protect against wrapping uints.
         //if (balances[_from] >= _value && allowed[_from][msg.sender] >= _value && balances[_to] + _value > balances[_to]) {
+
         if (balances[_from] >= _value && allowed[_from][msg.sender] >= _value && _value > 0) {
             balances[_to] += _value;
             balances[_from] -= _value;
             allowed[_from][msg.sender] -= _value;
             Transfer(_from, _to, _value);
             return true;
-        } else { return false; }
+        } else {return false;}
     }
 
     function balanceOf(address _owner) constant returns (uint256 balance) {
@@ -78,19 +83,19 @@ contract StandardToken is Token {
     }
 
     function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
-      return allowed[_owner][_spender];
+        return allowed[_owner][_spender];
     }
 
-    mapping (address => uint256) balances;
-    mapping (address => mapping (address => uint256)) allowed;
+    mapping(address => uint256) balances;
+    mapping(address => mapping(address => uint256)) allowed;
     uint256 public totalSupply;
 }
 
 
 //name this contract whatever you'd like
-contract ERC20Token is StandardToken {
+contract WednesdayCoin is StandardToken {
 
-    function () {
+    function() {
         //if ether is sent to this address, send it back.
         throw;
     }
@@ -108,19 +113,17 @@ contract ERC20Token is StandardToken {
     string public symbol;                 //An identifier: eg SBX
     string public version = 'WDN1.0';       //WDN 0.1 standard. Just an arbitrary versioning scheme.
 
-//
-// CHANGE THESE VALUES FOR YOUR TOKEN
-//
-
-//make sure this function name matches the contract name above. So if you're token is called TutorialToken, make sure the //contract name above is also TutorialToken instead of ERC20Token
-
-    function ERC20Token(
-        ) {
-        balances[msg.sender] = 210000000000000000000000000000;               // Give the creator all initial tokens (100000 for example)
-        totalSupply = 210000000000000000000000000000;                        // Update total supply (100000 for example)
-        name = "Wednesday Coin";                                   // Set the name for display purposes
-        decimals = 18;                            // Amount of decimals for display purposes
-        symbol = "WDN";                               // Set the symbol for display purposes
+    function WednesdayCoin() {
+        balances[msg.sender] = 210000000000000000000000000000;
+        // Give the creator all initial tokens (100000 for example)
+        totalSupply = 210000000000000000000000000000;
+        // Update total supply (100000 for example)
+        name = "Wednesday Coin";
+        // Set the name for display purposes
+        decimals = 18;
+        // Amount of decimals for display purposes
+        symbol = "WDN";
+        // Set the symbol for display purposes
     }
 
     /* Approves and then calls the receiving contract */
@@ -131,7 +134,7 @@ contract ERC20Token is StandardToken {
         //call the receiveApproval function on the contract you want to be notified. This crafts the function signature manually so one doesn't have to include a contract in here just for this.
         //receiveApproval(address _from, uint256 _value, address _tokenContract, bytes _extraData)
         //it is assumed that when does this that the call *should* succeed, otherwise one would use vanilla approve instead.
-        if(!_spender.call(bytes4(bytes32(sha3("receiveApproval(address,uint256,address,bytes)"))), msg.sender, _value, this, _extraData)) { throw; }
+        if (!_spender.call(bytes4(bytes32(sha3("receiveApproval(address,uint256,address,bytes)"))), msg.sender, _value, this, _extraData)) {throw;}
         return true;
     }
 }
