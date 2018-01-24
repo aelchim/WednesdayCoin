@@ -111,18 +111,18 @@ contract WednesdayCoin is StandardToken {
     string public name;                   //fancy name: eg Simon Bucks
     uint8 public decimals;                //How many decimals to show. ie. There could 1000 base units with 3 decimals. Meaning 0.980 SBX = 980 base units. It's like comparing 1 wei to 1 ether.
     string public symbol;                 //An identifier: eg SBX
-    string public version = 'WDN1.0';       //WDN 0.1 standard. Just an arbitrary versioning scheme.
+    string public version = 'WED1.0';       //WED 0.1 standard. Just an arbitrary versioning scheme.
 
     function WednesdayCoin() {
-        balances[msg.sender] = 210000000000000000000000000000;
+        balances[msg.sender] = 21000000000000000000000000000;
         // Give the creator all initial tokens (100000 for example)
-        totalSupply = 210000000000000000000000000000;
+        totalSupply = 21000000000000000000000000000;
         // Update total supply (100000 for example)
         name = "Wednesday Coin";
         // Set the name for display purposes
         decimals = 18;
         // Amount of decimals for display purposes
-        symbol = "WDN";
+        symbol = "WED";
         // Set the symbol for display purposes
     }
 
