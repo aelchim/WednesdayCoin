@@ -1,9 +1,9 @@
 # WednesdayCoin
 Smart Contract for Wednesday Coin - A coin that you can only use on Wednesdays! Great utility to help you store value without the worry of spending it.
 
-#### Contract Address: 0x6BB6CdACABca8CcdE8E015dEe0def578E1af9574
+#### Contract Address: 0x7848ae8f19671dc05966dafbefbbbb0308bdfabd
 
-https://etherscan.io/address/0x6bb6cdacabca8ccde8e015dee0def578e1af9574
+https://etherscan.io/address/0x7848ae8f19671dc05966dafbefbbbb0308bdfabd
 
 ### FAQ:
 
